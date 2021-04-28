@@ -7,9 +7,53 @@
     <title>Document</title>
 </head>
 <body>
-    <div>hhhhhh</div>
+    <div class="photo-add">
+        <img class="item-image"  alt="">
+    
+        <input type="file" accept="image/*"
+            name="uploader-input" 
+            class="uploader-file"
+            id="upload"/>
+    </div>
+    
+    <div id="box">第二次修改</div>
+   
+        <input type="text" id="two" value="">
+        <button type="button" onclick="submit()" >提交</button>
+
 <script>
-console.log(test);
+var box=document.getElementById("box")
+function submit(){
+
+    box.innerHTML=document.getElementById("two").value
+    // console.log(document.getElementById("two").value);
+}
+
+document.getElementById('upload').addEventListener('change', function (event) {
+    var $file = event.currentTarget;
+    var formData = new FormData();
+    var file = $file.files;
+    formData = new FormData();
+    formData.append(file[0].name, file[0]);
+    $.ajax({
+        url: '/upload',
+        type: 'POST',
+        dataType: 'json',
+        data: formData,
+        contentType: false,
+        processData: false
+    })
+    .done(data => {
+        $('#box').append(`<div class="photo-item">
+            <img class="item-image" width="100%" height="100%" src="${data.url}"/>
+        </div>`);
+    })
+    .fail(data => {
+        console.log(data);
+    });
+});
+
+
 </script>   
 
 </body>
