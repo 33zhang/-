@@ -14,18 +14,21 @@
     <div id="upload">
         <el-upload
          class="upload-demo"
-         action="E:/"
+         action="http://localhost:9091/"
          :on-preview="handlePreview"
          :on-remove="handleRemove"
          :file-list="fileList"
-         list-type="picture">
+         list-type="picture"
+         :on-error="error"
+         :name="nameImg">
          <el-button size="small" type="primary" @click="uploadImg">点击上传</el-button>
          <div slot="tip" class="el-upload__tip">只能上传jpg/png文件，且不超过500kb</div>
          </el-upload>
 
         <!-- <input type="text" value="" v-model="a">
          <P> {{a}} </P> -->
-
+         
+         <!-- https://blog.csdn.net/chunmeizhang_88/article/details/102613548 -->
     </div>
    
 <script>
@@ -37,6 +40,7 @@
             {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}
         ],
         a:'',
+        nameImg:'',
     },
        
     methods: {
@@ -45,10 +49,16 @@
       },
       handlePreview(file) {
         console.log(file);
+        console.log("handlePreview"+this.nameImg);
       },
       uploadImg(){
-
+          console.log( "点击上传文件");
+          console.log(this.fileList);
+      },
+      error(){
+          console.log("上传失败");
       }
+
     }
   }) 
 </script>
